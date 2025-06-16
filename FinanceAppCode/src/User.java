@@ -1,8 +1,8 @@
 public class User {
-    private int userId;
+    private final int userId;
     private String username;
     private String password;
-    private Integer enterpriseId;
+    private final Integer enterpriseId;
     private int accessLevel;
 
     public static final int ADMIN = 1;
@@ -54,6 +54,13 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
     public boolean isAdmin() {
         return accessLevel == ADMIN;
     }
