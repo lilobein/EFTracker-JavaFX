@@ -1,0 +1,85 @@
+public class User {
+    private int userId;
+    private String username;
+    private String password;
+    private Integer enterpriseId;
+    private int accessLevel;
+
+    public static final int ADMIN = 1;
+    public static final int MANAGER = 2;
+    public static final int ANALYST = 3;
+
+
+    public User(int userId, String username, String password, Integer enterpriseId, int accessLevel) {
+        validateAccessLevel(accessLevel);
+
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.enterpriseId = enterpriseId;
+        this.accessLevel = accessLevel;
+    }
+
+
+    private void validateAccessLevel(int level) {
+        if (level < ADMIN || level > ANALYST) {
+            throw new IllegalArgumentException(
+                    "Недопустимый уровень доступа. Допустимые значения: 1 (админ), 2 (менеджер), 3 (аналитик)"
+            );
+        }
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Integer getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(int accessLevel) {
+        validateAccessLevel(accessLevel);
+        this.accessLevel = accessLevel;
+    }
+
+    public boolean isAdmin() {
+        return accessLevel == ADMIN;
+    }
+
+    public boolean isManager() {
+        return accessLevel == MANAGER;
+    }
+
+    public boolean isAnalyst() {
+        return accessLevel == ANALYST;
+    }
+
+    @Override
+    public String toString() {
+        String roleName = switch (accessLevel) {
+            case ADMIN -> "ADMIN";
+            case MANAGER -> "MANAGER";
+            case ANALYST -> "ANALYST";
+            default -> "UNKNOWN";
+        };
+
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", enterpriseId=" + enterpriseId +
+                ", accessLevel=" + roleName +
+                '}';
+    }
+}

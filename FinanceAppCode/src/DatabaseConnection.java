@@ -10,7 +10,6 @@ import java.sql.*;
             if (connection == null) {
                 try {
                     connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                    System.out.println("Успешное подключение к БД!");
                 } catch (SQLException e) {
                     System.err.println("Ошибка подключения: " + e.getMessage());
                 }
