@@ -4,11 +4,9 @@ public class User {
     private String password;
     private final Integer enterpriseId;
     private int accessLevel;
-
     public static final int ADMIN = 1;
     public static final int MANAGER = 2;
     public static final int ANALYST = 3;
-
 
     public User(int userId, String username, String password, Integer enterpriseId, int accessLevel) {
         validateAccessLevel(accessLevel);
