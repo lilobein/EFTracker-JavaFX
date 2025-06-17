@@ -2,7 +2,6 @@ import java.sql.*;
 import java.sql.SQLException;
 
 public class UserDAO {
-
     public static User save(User user) throws SQLException {
         String query = "INSERT INTO users (username, password, enterprise_id, access_level) VALUES (?, ?, ?, ?)";
 
@@ -13,11 +12,9 @@ public class UserDAO {
             stmt.setInt(4, user.getAccessLevel());
             stmt.executeUpdate();
 
-            // Получаем ID из БД
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int generatedId = rs.getInt(1);
-                    // Создаём НОВЫЙ объект с ID из БД
                     return new User(
                             generatedId,
                             user.getUsername(),
