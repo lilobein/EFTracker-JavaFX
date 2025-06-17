@@ -4,19 +4,19 @@ public class User {
     private int userId;
     private String username;
     private String password;
-    private final int enterpriseId;
+    private final Enterprise enterprise;
     private int accessLevel;
     public static final int ADMIN = 1;
     public static final int MANAGER = 2;
     public static final int ANALYST = 3;
 
-    public User(int userId, String username, String password, int enterpriseId, int accessLevel) {
+    public User(int userId, String username, String password, Enterprise enterpriseId, int accessLevel) {
         validateAccessLevel(accessLevel);
 
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.enterpriseId = enterpriseId;
+        this.enterprise = enterpriseId;
         this.accessLevel = accessLevel;
     }
 
@@ -34,7 +34,7 @@ public class User {
         try (PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, this.username);
             stmt.setString(2, this.password);
-            stmt.setInt(3, this.enterpriseId);
+            stmt.setInt(3, this.enterprise.getId());
             stmt.setInt(4, this.accessLevel);
             stmt.executeUpdate();
 
@@ -65,12 +65,15 @@ public class User {
             ResultSet rs = stmt.executeQuery();
 
             QueryResultWrapper wrapper = QueryResultWrapper.getInstance();
+
+            int enterprise_id = rs.getInt("enterprise_id");
+            Enterprise enterprise = (Enterprise) Enterprise.findById(enterprise_id).unwrap();
             if (rs.next()) {
                 User user = new User(
                         rs.getInt("user_id"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getInt("enterprise_id"),
+                        enterprise,
                         rs.getInt("access_level")
                 );
                 wrapper.wrap(user);
@@ -103,8 +106,8 @@ public class User {
         return password;
     }
 
-    public Integer getEnterpriseId() {
-        return enterpriseId;
+    public Enterprise getEnterpriseId() {
+        return enterprise;
     }
 
     public int getAccessLevel() {
@@ -147,7 +150,7 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", enterpriseId=" + enterpriseId +
+                ", enterpriseId=" + enterprise.getId() +
                 ", accessLevel=" + roleName +
                 '}';
     }

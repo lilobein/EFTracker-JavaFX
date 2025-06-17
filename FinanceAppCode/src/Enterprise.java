@@ -1,3 +1,7 @@
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Enterprise {
     private int id;
     private String name;
@@ -20,6 +24,8 @@ public class Enterprise {
         this.phone = phone;
     }
 
+
+    public Enterprise getEnterprise(){return this;}
 
     public int getId() {
         return id;
@@ -66,6 +72,30 @@ public class Enterprise {
 
     public boolean hasContactPerson() {
         return contactPerson != null && !contactPerson.trim().isEmpty();
+    }
+
+    public static QueryResultWrapper findById(int id) throws SQLException {
+        String query = "SELECT * FROM users WHERE user_id = ?";
+        try (PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            QueryResultWrapper wrapper = QueryResultWrapper.getInstance();
+
+            if (rs.next()) {
+                Enterprise enterprise = new Enterprise(
+                        rs.getInt("enterprise_id"),
+                        rs.getString("name"),
+                        rs.getString("contactPerson"),
+                        rs.getString("details"),
+                        rs.getString("phone")
+                );
+                wrapper.wrap(enterprise);
+            } else {
+                wrapper.wrap(null);
+            }
+            return wrapper;
+        }
     }
 
     @Override
