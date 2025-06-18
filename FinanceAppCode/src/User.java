@@ -8,9 +8,8 @@ public class User {
     public static final int MANAGER = 2;
     public static final int ANALYST = 3;
 
-    public User(int userId, String username, String password, int enterpriseId, int accessLevel) {
+    public User( String username, String password, int enterpriseId, int accessLevel) {
         validateAccessLevel(accessLevel);
-        this.userId = userId;
         this.username = username;
         this.password = password;
         this.enterpriseId = enterpriseId;
@@ -53,6 +52,7 @@ public class User {
     public void setUsername(String username){
         this.username = username;
     }
+    public void setId(int id){this.userId = id;}
     public void setPassword(String password){
         this.password = password;
     }
