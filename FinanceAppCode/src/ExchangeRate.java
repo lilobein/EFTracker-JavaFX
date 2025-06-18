@@ -9,7 +9,7 @@ public class ExchangeRate {
         this.rate = rate;
     }
 
-    
+
     public Currency getCurrencyFrom() {
         return currencyFrom;
     }
