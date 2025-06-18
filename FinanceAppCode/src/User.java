@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 public class User {
     private int userId;
     private String username;
@@ -8,7 +10,7 @@ public class User {
     public static final int MANAGER = 2;
     public static final int ANALYST = 3;
 
-    public User( String username, String password, int enterpriseId, int accessLevel) {
+    public User( String username, String password, int enterpriseId, int accessLevel) throws SQLException {
         validateAccessLevel(accessLevel);
         this.username = username;
         this.password = password;
