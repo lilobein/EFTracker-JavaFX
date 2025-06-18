@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExchangeRateDAO {
-    // Получить все курсы
     public static List<ExchangeRate> getAllRates() throws SQLException {
         List<ExchangeRate> rates = new ArrayList<>();
         String query = "SELECT currency_from_id, currency_to_id, rate FROM exchange_rates";
