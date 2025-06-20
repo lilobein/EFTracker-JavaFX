@@ -35,9 +35,8 @@ public class UserDAO {
     public static QueryResultWrapper findById(int userId) throws SQLException {
         String query = "SELECT * FROM users WHERE id=?";
         QueryResultWrapper wrapper = QueryResultWrapper.getInstance();
-
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+            PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -66,6 +65,37 @@ public class UserDAO {
             stmt.setInt(1, user.getUserId());
             stmt.executeUpdate();
         }
+    }
+
+    public static QueryResultWrapper findByUsernameAndPassword(String username, String password) throws SQLException {
+        String query = "SELECT * FROM users WHERE login = ? AND password = ?";
+        QueryResultWrapper wrapper = QueryResultWrapper.getInstance();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User(
+                            rs.getString("username"),
+                            rs.getString("password"),  // В реальном приложении используйте хеширование!
+                            rs.getObject("enterprise_id", Integer.class),
+                            rs.getInt("access_level")
+                    );
+                    user.setId(rs.getInt("id"));
+                    wrapper.wrap(user);
+                } else {
+                    wrapper.wrap(null);
+                }
+            }
+        } catch (SQLException e) {
+            wrapper.wrap(null);
+            throw e;
+        }
+        return wrapper;
     }
 
 }

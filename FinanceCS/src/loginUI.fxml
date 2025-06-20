@@ -8,13 +8,13 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerLogin">
    <children>
-      <Button layoutX="216.0" layoutY="262.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Войти" textFill="#3b3a3a" />
+      <Button fx:id="loginButton" layoutX="216.0" layoutY="262.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Войти" textFill="#3b3a3a" />
       <Label layoutX="189.0" layoutY="167.0" text="Логин:" />
       <Label layoutX="187.0" layoutY="209.0" text="Пароль" />
-      <PasswordField layoutX="246.0" layoutY="205.0" />
-      <TextField layoutX="246.0" layoutY="163.0" />
+      <PasswordField fx:id="passwordField" layoutX="246.0" layoutY="205.0" />
+      <TextField fx:id="loginField" layoutX="246.0" layoutY="163.0" />
       <Label layoutX="120.0" layoutY="302.0" text="Если Вы не получили данные для авторизации, обратитесь к администратору системы ">
          <font>
             <Font size="10.0" />
