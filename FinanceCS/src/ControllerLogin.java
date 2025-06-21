@@ -4,21 +4,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
+
 import java.sql.SQLException;
 
 public class ControllerLogin {
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
+    Login login;
 
-    // Инициализация (вызывается автоматически после загрузки FXML)
+
     @FXML
     private void initialize() {
         setupButtonStateHandler();
         setupEnterKeyHandler();
     }
 
-    // Настройка активации кнопки при вводе данных
+
     private void setupButtonStateHandler() {
         loginButton.setDisable(true); // Кнопка изначально неактивна
 
@@ -31,7 +34,7 @@ public class ControllerLogin {
         );
     }
 
-    // Обработка нажатия Enter (аналог клика по кнопке)
+
     private void setupEnterKeyHandler() {
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER && !loginButton.isDisabled()) {
@@ -40,7 +43,6 @@ public class ControllerLogin {
         });
     }
 
-    // Обновление состояния кнопки
     private void updateLoginButtonState() {
         boolean fieldsEmpty = loginField.getText().isEmpty() ||
                 passwordField.getText().isEmpty();
@@ -50,24 +52,34 @@ public class ControllerLogin {
 
     @FXML
     private void handleLogin() {
+        String username = loginField.getText();
+        String password = passwordField.getText();
+
         try {
-            Login login = new Login(loginField.getText().trim(), passwordField.getText().trim());
+            Login login = new Login(username, password);
             if (login.validate()) {
-                showSuccessAndOpenMainWindow();
+                // Закрываем текущее окно авторизации
+                Stage currentStage = (Stage) loginButton.getScene().getWindow();
+                currentStage.close();
+
+                // Открываем окно менеджера
+                openManagerWindow();
             } else {
                 showError("Неверный логин или пароль!");
-                passwordField.clear();
             }
         } catch (SQLException e) {
             showError("Ошибка базы данных: " + e.getMessage());
         }
     }
 
-    // Успешная авторизация
-    private void showSuccessAndOpenMainWindow() {
-        showSuccess("Авторизация успешна!");
-        // Заглушка - здесь будет переход в главное окно
-        // Пример: MainApp.showMainWindow();
+    private void openManagerWindow() {
+        try {
+            Stage managerStage = new Stage();
+            SceneMainManager managerScene = new SceneMainManager();
+            managerScene.start(managerStage);
+        } catch (Exception e) {
+            showError("Ошибка открытия панели менеджера: " + e.getMessage());
+        }
     }
 
     private void showError(String message) {

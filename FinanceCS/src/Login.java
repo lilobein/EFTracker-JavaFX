@@ -16,7 +16,6 @@ public class Login {
         if (user == null || !user.getPassword().equals(password)) {
             return false;
         }
-
         return true;
     }
 

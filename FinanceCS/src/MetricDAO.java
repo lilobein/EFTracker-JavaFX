@@ -1,4 +1,7 @@
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MetricDAO {
     public static void save(Metric metric) throws SQLException {
@@ -85,5 +88,29 @@ public class MetricDAO {
             statement.setInt(1, metric.getId());
             statement.executeUpdate();
         }
+    }
+
+    public static List<Metric> findAll() throws SQLException {
+        String query = "SELECT * FROM metrics";
+        List<Metric> metrics = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                Metric metric = new Metric(
+                        rs.getString("metric_name"),
+                        rs.getDouble("value"),
+                        rs.getInt("currency_id"),
+                        rs.getByte("importance_constant"),
+                        rs.getDate("period_start").toLocalDate(),
+                        rs.getDate("period_end").toLocalDate(),
+                        rs.getInt("enterprise_id")
+                );
+                metric.setId(rs.getInt("id"));
+                metrics.add(metric);
+            }
+        }
+        return metrics;
     }
 }

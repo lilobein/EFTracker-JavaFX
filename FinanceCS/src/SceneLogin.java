@@ -26,7 +26,7 @@ import java.io.IOException;
  * Класс сцены авторизации. Загружает FXML и настраивает окно.
  */
 public class SceneLogin extends Application {
-    private static final int WIDTH = 600;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private static final String TITLE = "Авторизация";
 
