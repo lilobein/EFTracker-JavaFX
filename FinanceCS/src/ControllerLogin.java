@@ -14,8 +14,6 @@ public class ControllerLogin {
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     private Login login;
-
-
     @FXML
     private void initialize() {
         setupButtonStateHandler();

@@ -19,7 +19,7 @@ public class SceneMainManager extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerMainViewer.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("C:\\Users\\diana\\Desktop\\ProgectFX\\FinanceCS\\resources\\ManagerMainViewer.fxml"));
             Parent root = loader.load();
             metricsTable = (TableView<Metric>) root.lookup("#metricsTable");
             metricsTable.setItems(model.getTableData());
