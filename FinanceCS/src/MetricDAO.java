@@ -65,9 +65,7 @@ public class MetricDAO {
     public static void update(Metric metric) throws SQLException {
         String query = "UPDATE metrics SET metric_name=?, value=?, currency_id=?, " +
                 "importance_constant=?, period_start=?, period_end=?, enterprise_id=? WHERE id=?";
-
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
-
             statement.setString(1, metric.getMetric_name());
             statement.setDouble(2, metric.getValue());
             statement.setInt(3, metric.getCurrency_id());
@@ -83,7 +81,6 @@ public class MetricDAO {
 
     public static void delete(Metric metric) throws SQLException {
         String query = "DELETE FROM metrics WHERE id=?";
-
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
             statement.setInt(1, metric.getId());
             statement.executeUpdate();
@@ -120,7 +117,6 @@ public class MetricDAO {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
             stmt.setInt(1, enterpriseId);
 
             try (ResultSet rs = stmt.executeQuery()) {

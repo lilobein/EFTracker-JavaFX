@@ -53,7 +53,9 @@ public class ControllerLogin {
             if (login.validate()) {
                 Stage currentStage = (Stage) loginButton.getScene().getWindow();
                 currentStage.close();
-                openManagerWindow();
+                if (login.getUser().isManager()){
+                    openManagerWindow();
+                }
             } else {
                 showError("Неверный логин или пароль!");
             }

@@ -39,14 +39,15 @@ public class ControllerMainManager {
             return;
         }
 
-//        if (showConfirmation("Удалить выбранный показатель?")) {
+        if (showConfirmation("Удалить выбранный показатель?")) {
             try {
                 model.delete(selected);
-                view.getMetricsTable().getItems().remove(selected); // Локальное обновление
+                view.refreshTable();
+                view.getMetricsTable().getItems().remove(selected);
             } catch (SQLException e) {
                 showError("Ошибка удаления: " + e.getMessage());
             }
-//        }
+        }
     }
 
 //    private void handleDelete() {

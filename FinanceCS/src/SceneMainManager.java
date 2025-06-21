@@ -24,7 +24,7 @@ public class SceneMainManager extends Application {
             metricsTable = (TableView<Metric>) root.lookup("#metricsTable");
             metricsTable.setItems(model.getTableData());
             controller = loader.getController();
-            controller.setMainManager(this); // Передаем ссылку на сцену
+            controller.setMainManager(this);
             stage.setScene(new Scene(root));
             stage.setTitle("Панель менеджера");
             stage.show();

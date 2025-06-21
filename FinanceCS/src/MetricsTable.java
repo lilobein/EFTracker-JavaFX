@@ -16,17 +16,14 @@ public class MetricsTable {
 
     public void save(Metric metric) throws SQLException {
         MetricDAO.save(metric);
-        refreshData();
     }
 
     public void update(Metric metric) throws SQLException {
         MetricDAO.update(metric);
-        refreshData();
     }
 
     public void delete(Metric metric) throws SQLException {
         MetricDAO.delete(metric);
-        refreshData();
     }
 
     public void refreshData() {
