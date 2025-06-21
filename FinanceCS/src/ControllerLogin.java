@@ -26,28 +26,27 @@ public class ControllerLogin {
         loginButton.setDisable(isDisabled);
     }
 
-    @FXML
-    private void handleLoginButton() {
-        System.out.println("Логин: " + loginField.getText());
-        System.out.println("Пароль: " + passwordField.getText());
-    }
-
-    @FXML
-    private void handleLoginButton() {
-        try {
-            QueryResultWrapper result = UserDAO.findByUsernameAndPassword(
-                    loginField.getText(),
-                    passwordField.getText()
-            );
-
-            User user = (User) result.unwrap();
-            if (user != null) {
-                // Успешная авторизация
-            } else {
-                // Неверные данные
-            }
-        } catch (SQLException e) {
-            // Обработка ошибки БД
-        }
-    }
+//    @FXML
+//    private void handleLoginButton() {
+//        System.out.println("Логин: " + loginField.getText());
+//        System.out.println("Пароль: " + passwordField.getText());
+//    }
+//
+//    @FXML
+//    private void handleLoginButton() {
+//        try {
+//            QueryResultWrapper result = UserDAO.findByUsernameAndPassword(
+//                    loginField.getText(),
+//                    passwordField.getText()
+//            );
+//
+//            User user = (User) result.unwrap();
+//            if (user != null) {
+//                // Успешная авторизация
+//            } else {
+//                // Неверные данные
+//            }
+//        } catch (SQLException e) {
+//            // Обработка ошибки БД
+//        }//   }
 }

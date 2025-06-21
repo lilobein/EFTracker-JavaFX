@@ -1,7 +1,6 @@
 import java.sql.*;
 
 public class MetricDAO {
-    private static final DatabaseConnection dbConnection = DatabaseConnection.getConnection();
     public static void save(Metric metric) throws SQLException {
         String query = "INSERT INTO metrics (metric_name, value, currency_id, importance_constant, " +
                 "period_start, period_end, enterprise_id) VALUES (?, ?, ?, ?, ?, ?, ?)";

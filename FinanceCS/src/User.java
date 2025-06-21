@@ -1,11 +1,12 @@
 import java.sql.SQLException;
 
 public class User {
-    private int userId;
+    private int id;
     private String username;
     private String password;
     private final int enterpriseId;
     private int accessLevel;
+
     public static final int ADMIN = 1;
     public static final int MANAGER = 2;
     public static final int ANALYST = 3;
@@ -18,8 +19,8 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -54,7 +55,7 @@ public class User {
     public void setUsername(String username){
         this.username = username;
     }
-    public void setId(int id){this.userId = id;}
+    public void setId(int id){this.id = id;}
     public void setPassword(String password){
         this.password = password;
     }
@@ -80,7 +81,7 @@ public class User {
         };
 
         return "User{" +
-                "userId=" + userId +
+                "userId=" + id +
                 ", username='" + username + '\'' +
                 ", enterpriseId=" + enterpriseId +
                 ", accessLevel=" + roleName +

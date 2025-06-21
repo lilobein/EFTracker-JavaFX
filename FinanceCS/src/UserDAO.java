@@ -3,13 +3,13 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public static void createUser(User user) throws SQLException {
+    public static void saveUser(User user) throws SQLException {
         String sql = "INSERT INTO users (username, password, enterprise_id, access_level) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
-            stmt.setObject(3, user.getEnterpriseId(), Types.INTEGER);
+            stmt.setInt(3, user.getEnterpriseId());
             stmt.setInt(4, user.getAccessLevel());
             stmt.executeUpdate();
 
@@ -18,7 +18,11 @@ public class UserDAO {
                     user.setId(rs.getInt(1));
                 }
             }
-        } throw new SQLException("Что-то не получилось - лучше разобраться в причине");
+            } catch (SQLException e) {
+            // Логируем ошибку перед передачей её дальше
+            System.err.println("Ошибка при сохранении пользователя: " + e.getMessage());
+            throw e;
+        }
     }
 
     public static void update(User user) throws SQLException {
@@ -27,7 +31,7 @@ public class UserDAO {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setInt(3, user.getAccessLevel());
-            stmt.setInt(4, user.getUserId());
+            stmt.setInt(4, user.getId());
             stmt.executeUpdate();
         }
     }
@@ -62,7 +66,7 @@ public class UserDAO {
     public static void delete(User user) throws SQLException {
         String query = "DELETE FROM users WHERE id=?";
         try (PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(query)) {
-            stmt.setInt(1, user.getUserId());
+            stmt.setInt(1, user.getId());
             stmt.executeUpdate();
         }
     }
@@ -81,8 +85,8 @@ public class UserDAO {
                 if (rs.next()) {
                     User user = new User(
                             rs.getString("username"),
-                            rs.getString("password"),  // В реальном приложении используйте хеширование!
-                            rs.getObject("enterprise_id", Integer.class),
+                            rs.getString("password"),
+                            rs.getInt("enterprise_id"),
                             rs.getInt("access_level")
                     );
                     user.setId(rs.getInt("id"));
