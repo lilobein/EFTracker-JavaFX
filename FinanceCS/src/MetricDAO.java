@@ -82,7 +82,7 @@ public class MetricDAO {
     }
 
     public static void delete(Metric metric) throws SQLException {
-        String query = "DELETE FROM indicators WHERE id=?";
+        String query = "DELETE FROM metrics WHERE id=?";
 
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
             statement.setInt(1, metric.getId());

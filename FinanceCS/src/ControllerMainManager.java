@@ -2,7 +2,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -10,16 +9,23 @@ import java.time.LocalDate;
 public class ControllerMainManager {
     @FXML private Button deleteButton;
 
-    private MetricsTable model;
+    private static MetricsTable model;
     private SceneMainManager view;
 
-    public ControllerMainManager(MetricsTable model, SceneMainManager view){
-        this.view = view;
+
+    @FXML
+    private void initialize() {
+        setupButtonActions();
+
+    }
+
+    public void setModel(MetricsTable model){
         this.model = model;
     }
 
-    public void initialize() {
-        setupButtonActions();
+    public void setMainManager(SceneMainManager mainManager) {
+        this.view = mainManager;
+        setModel(view.getModel());
     }
 
     private void setupButtonActions() {

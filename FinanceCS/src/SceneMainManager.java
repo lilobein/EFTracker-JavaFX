@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 public class SceneMainManager extends Application {
     private TableView<Metric> metricsTable;
     private MetricsTable model;
+    private ControllerMainManager controller;
 
     public SceneMainManager(MetricsTable model){
         this.model = model;
@@ -22,9 +23,12 @@ public class SceneMainManager extends Application {
             Parent root = loader.load();
             metricsTable = (TableView<Metric>) root.lookup("#metricsTable");
             metricsTable.setItems(model.getTableData());
+            controller = loader.getController();
+            controller.setMainManager(this); // Передаем ссылку на сцену
             stage.setScene(new Scene(root));
             stage.setTitle("Панель менеджера");
             stage.show();
+
         } catch (Exception e) {
             showErrorDialog("Ошибка запуска", e.getMessage());
             e.printStackTrace();
@@ -39,6 +43,7 @@ public class SceneMainManager extends Application {
     }
 
     public TableView<Metric> getMetricsTable(){return metricsTable;}
+    public MetricsTable getModel(){return model;}
 
     public void refreshTable() {
         model.refreshData();

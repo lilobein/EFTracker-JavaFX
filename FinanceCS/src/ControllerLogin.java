@@ -68,7 +68,6 @@ public class ControllerLogin {
             MetricsTable table = new MetricsTable(login.getUser());
             SceneMainManager managerScene = new SceneMainManager(table);
             managerScene.start(managerStage);
-            ControllerMainManager controller = new ControllerMainManager(table, managerScene);
         } catch (Exception e) {
             showError("Ошибка открытия панели менеджера: " + e.getMessage());
         }
