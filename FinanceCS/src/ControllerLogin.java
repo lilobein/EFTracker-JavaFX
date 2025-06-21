@@ -12,7 +12,7 @@ public class ControllerLogin {
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
-    Login login;
+    private Login login;
 
 
     @FXML
@@ -21,11 +21,8 @@ public class ControllerLogin {
         setupEnterKeyHandler();
     }
 
-
     private void setupButtonStateHandler() {
         loginButton.setDisable(true); // Кнопка изначально неактивна
-
-        // Слушатели изменений в полях ввода
         loginField.textProperty().addListener((obs, oldVal, newVal) ->
                 updateLoginButtonState()
         );
@@ -52,17 +49,11 @@ public class ControllerLogin {
 
     @FXML
     private void handleLogin() {
-        String username = loginField.getText();
-        String password = passwordField.getText();
-
         try {
-            Login login = new Login(username, password);
+            Login login = new Login(loginField.getText(), passwordField.getText());
             if (login.validate()) {
-                // Закрываем текущее окно авторизации
                 Stage currentStage = (Stage) loginButton.getScene().getWindow();
                 currentStage.close();
-
-                // Открываем окно менеджера
                 openManagerWindow();
             } else {
                 showError("Неверный логин или пароль!");

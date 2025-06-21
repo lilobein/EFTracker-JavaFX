@@ -32,10 +32,7 @@ public class SceneLogin extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // 1. Загружаем FXML
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-
-        // 2. Настраиваем окно
         stage.setTitle(TITLE);
         stage.setScene(new Scene(root, WIDTH, HEIGHT));
         stage.setResizable(false);

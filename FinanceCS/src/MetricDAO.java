@@ -113,4 +113,32 @@ public class MetricDAO {
         }
         return metrics;
     }
+
+    public static List<Metric> findByEnterpriseId(int enterpriseId) throws SQLException {
+        String query = "SELECT * FROM metrics WHERE enterprise_id = ?";
+        List<Metric> metrics = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, enterpriseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Metric metric = new Metric(
+                            rs.getString("metric_name"),
+                            rs.getDouble("value"),
+                            rs.getInt("currency_id"),
+                            rs.getByte("importance_constant"),
+                            rs.getDate("period_start").toLocalDate(),
+                            rs.getDate("period_end").toLocalDate(),
+                            rs.getInt("enterprise_id")
+                    );
+                    metric.setId(rs.getInt("id"));
+                    metrics.add(metric);
+                }
+            }
+        }
+        return metrics;
+    }
 }

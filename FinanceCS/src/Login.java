@@ -1,8 +1,9 @@
 import java.sql.SQLException;
 
 public class Login {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
+    private static User user;
 
     public Login(String username, String password) {
         this.username = username;
@@ -11,7 +12,7 @@ public class Login {
 
     public boolean validate() throws SQLException {
         QueryResultWrapper result = UserDAO.findByUsername(username);
-        User user = (User) result.unwrap();
+        user = (User) result.unwrap();
 
         if (user == null || !user.getPassword().equals(password)) {
             return false;
@@ -19,7 +20,7 @@ public class Login {
         return true;
     }
 
-
+    public static User getUser(){return user;}
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 }
