@@ -71,16 +71,12 @@ public class UserDAO {
         }
     }
 
-    public static QueryResultWrapper findByUsernameAndPassword(String username, String password) throws SQLException {
-        String query = "SELECT * FROM users WHERE login = ? AND password = ?";
+    public static QueryResultWrapper findByUsername(String username) throws SQLException {
+        String query = "SELECT * FROM users WHERE username = ?";
         QueryResultWrapper wrapper = QueryResultWrapper.getInstance();
-
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
             stmt.setString(1, username);
-            stmt.setString(2, password);
-
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     User user = new User(

@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 public class Login {
     private String username;
     private String password;
@@ -7,12 +9,18 @@ public class Login {
         this.password = password;
     }
 
-    // Геттеры
-    public String getUsername() {
-        return username;
+    public boolean validate() throws SQLException {
+        QueryResultWrapper result = UserDAO.findByUsername(username);
+        User user = (User) result.unwrap();
+
+        if (user == null || !user.getPassword().equals(password)) {
+            return false;
+        }
+
+        return true;
     }
 
-    public String getPassword() {
-        return password;
-    }
+
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
 }

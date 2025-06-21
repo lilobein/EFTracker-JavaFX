@@ -1,15 +1,44 @@
+//import javafx.fxml.FXMLLoader;
+//import javafx.scene.Parent;
+//import java.io.IOException;
+//
+//public class SceneLogin {
+//    private Parent root;  // Корневой элемент FXML
+//
+//    public SceneLogin() throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("loginUI.fxml"));
+//        this.root = loader.load();
+//    }
+//
+//    public Parent getRoot() {
+//        return root;
+//    }
+//}
+
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.io.IOException;
 
-public class SceneLogin {
-    private Parent root;
+/**
+ * Класс сцены авторизации. Загружает FXML и настраивает окно.
+ */
+public class SceneLogin extends Application {
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 600;
+    private static final String TITLE = "Авторизация";
 
-    public SceneLogin() throws IOException {
-        root = FXMLLoader.load(getClass().getResource("loginUI.fxml"));
-    }
+    @Override
+    public void start(Stage stage) throws IOException {
+        // 1. Загружаем FXML
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 
-    public Parent getRoot() {
-        return root;
+        // 2. Настраиваем окно
+        stage.setTitle(TITLE);
+        stage.setScene(new Scene(root, WIDTH, HEIGHT));
+        stage.setResizable(false);
+        stage.show();
     }
 }
