@@ -18,7 +18,7 @@ public class ControllerLogin {
     @FXML
     private void initialize() {
         setupButtonStateHandler();
-        setupEnterKeyHandler();
+        setupLoginButtonHandler();
     }
 
     private void setupButtonStateHandler() {
@@ -32,20 +32,18 @@ public class ControllerLogin {
     }
 
 
-    private void setupEnterKeyHandler() {
-        passwordField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER && !loginButton.isDisabled()) {
+    private void setupLoginButtonHandler() {
+        loginButton.setOnAction(event -> {
+            if (!loginButton.isDisabled()) {
                 handleLogin();
             }
         });
     }
-
     private void updateLoginButtonState() {
         boolean fieldsEmpty = loginField.getText().isEmpty() ||
                 passwordField.getText().isEmpty();
         loginButton.setDisable(fieldsEmpty);
     }
-
 
     @FXML
     private void handleLogin() {
@@ -77,9 +75,4 @@ public class ControllerLogin {
         new Alert(Alert.AlertType.ERROR, message).showAndWait();
     }
 
-    private void showSuccess(String message) {
-        System.out.println(message);
-        // Можно заменить на Alert:
-        // new Alert(Alert.AlertType.INFORMATION, message).showAndWait();
-    }
 }
