@@ -1,3 +1,5 @@
+package Models;
+
 public class ExchangeRate {
     private final Currency currencyFrom;
     private final Currency currencyTo;

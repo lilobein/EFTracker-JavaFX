@@ -1,3 +1,5 @@
+package Models;
+
 public class Enterprise {
     private int id;
     private String name;

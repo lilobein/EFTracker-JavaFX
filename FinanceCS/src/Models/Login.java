@@ -1,3 +1,7 @@
+package Models;
+import Dao.UserDAO;
+import other.QueryResultWrapper;
+
 import java.sql.SQLException;
 
 public class Login {

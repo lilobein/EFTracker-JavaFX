@@ -1,4 +1,4 @@
-//import javafx.fxml.FXMLLoader;
+package Viewers;//import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 //import java.io.IOException;
 //
@@ -32,7 +32,7 @@ public class SceneLogin extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("C:\\Users\\diana\\Desktop\\ProgectFX\\FinanceCS\\src\\resources\\login.fxml"));
         stage.setTitle(TITLE);
         stage.setScene(new Scene(root, WIDTH, HEIGHT));
         stage.setResizable(false);

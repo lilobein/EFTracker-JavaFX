@@ -1,5 +1,11 @@
+package Dao;
+
+import Models.ExchangeRate;
+import other.DatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
+import Models.Currency;
 import java.util.List;
 
 public class ExchangeRateDAO {

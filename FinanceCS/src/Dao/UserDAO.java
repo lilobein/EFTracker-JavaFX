@@ -1,3 +1,9 @@
+package Dao;
+
+import Models.User;
+import other.DatabaseConnection;
+import other.QueryResultWrapper;
+
 import java.sql.*;
 import java.sql.SQLException;
 

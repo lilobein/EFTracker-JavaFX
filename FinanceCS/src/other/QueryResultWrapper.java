@@ -1,3 +1,5 @@
+package other;
+
 public class QueryResultWrapper {
     private static QueryResultWrapper instance;
     private Object data;
