@@ -20,7 +20,7 @@ public class Login {
         return true;
     }
 
-    public static User getUser(){return user;}
+    public User getUser(){return user;}
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 }

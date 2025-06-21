@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class ControllerLogin {
+
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
@@ -22,7 +23,7 @@ public class ControllerLogin {
     }
 
     private void setupButtonStateHandler() {
-        loginButton.setDisable(true); // Кнопка изначально неактивна
+        loginButton.setDisable(true);
         loginField.textProperty().addListener((obs, oldVal, newVal) ->
                 updateLoginButtonState()
         );
@@ -48,7 +49,7 @@ public class ControllerLogin {
     @FXML
     private void handleLogin() {
         try {
-            Login login = new Login(loginField.getText(), passwordField.getText());
+            login = new Login(loginField.getText(), passwordField.getText());
             if (login.validate()) {
                 Stage currentStage = (Stage) loginButton.getScene().getWindow();
                 currentStage.close();
@@ -64,8 +65,10 @@ public class ControllerLogin {
     private void openManagerWindow() {
         try {
             Stage managerStage = new Stage();
-            SceneMainManager managerScene = new SceneMainManager();
+            MetricsTable table = new MetricsTable(login.getUser());
+            SceneMainManager managerScene = new SceneMainManager(table);
             managerScene.start(managerStage);
+            ControllerMainManager controller = new ControllerMainManager(table, managerScene);
         } catch (Exception e) {
             showError("Ошибка открытия панели менеджера: " + e.getMessage());
         }
