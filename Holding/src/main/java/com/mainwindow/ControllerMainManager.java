@@ -7,9 +7,13 @@ import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
+
 
 public class ControllerMainManager {
     @FXML private Button deleteButton;
+    @FXML private Button addButton;
+    @FXML private Button editButton;
 
     private static MetricsTable model;
     private SceneMainManager view;
@@ -32,6 +36,8 @@ public class ControllerMainManager {
 
     private void setupButtonActions() {
         deleteButton.setOnAction(e -> handleDelete());
+        addButton.setOnAction(e -> handleAdd());
+
     }
 
     private void handleDelete() {
@@ -52,35 +58,34 @@ public class ControllerMainManager {
         }
     }
 
-//    private void handleDelete() {
-//        Metric selected = view.getMetricsTable().getSelectionModel().getSelectedItem();
-//        if (selected == null) {
-//            showError("Выберите показатель для удаления");
-//            return;
-//        }
-//
-//        if (showConfirmation("Удалить выбранный показатель?")) {
-//            try {
-//                model.delete(selected);
-//                view.refreshTable();
-//            } catch (SQLException e) {
-//                showError("Ошибка удаления: " + e.getMessage());
-//            }
-//        }
-//    }
 
-
+    @FXML
     private void handleAdd() {
-        try {
-            Metric newMetric = createNewMetric();
-            if (showConfirmation("Добавить новый показатель?")) {
+        Optional<Metric> result = view.showAddMetricDialog();
+        if (result.isPresent()) {
+            Metric newMetric = result.get();
+            try {
                 model.save(newMetric);
                 view.refreshTable();
+                System.out.println("норм");
+            } catch (SQLException e) {
+                System.out.println("насрала");
             }
-        } catch (SQLException e) {
-            showError("Ошибка добавления: " + e.getMessage());
         }
     }
+
+//
+//    private void handleAdd() {
+//        try {
+//            Metric newMetric = createNewMetric();
+//            if (showConfirmation("Добавить новый показатель?")) {
+//                model.save(newMetric);
+//                view.refreshTable();
+//            }
+//        } catch (SQLException e) {
+//            showError("Ошибка добавления: " + e.getMessage());
+//        }
+//    }
 
     private void handleEdit() {
         Metric selected = view.getMetricsTable().getSelectionModel().getSelectedItem();

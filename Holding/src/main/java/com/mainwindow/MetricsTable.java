@@ -19,6 +19,7 @@ public class MetricsTable {
 
     public void save(Metric metric) throws SQLException {
         MetricDAO.save(metric);
+
     }
 
     public void update(Metric metric) throws SQLException {
