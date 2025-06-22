@@ -79,9 +79,9 @@ public class MetricDAO {
             statement.setDate(6, Date.valueOf(metric.getPeriod_end()));
             statement.setInt(7, metric.getEnterprise_id());
             statement.setInt(8, metric.getId());
-
             statement.executeUpdate();
         }
+
     }
 
     public static void delete(Metric metric) throws SQLException {

@@ -1,10 +1,11 @@
 package com.mainwindow;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public class ControllerMainManager {
     @FXML private Button addButton;
     @FXML private Button editButton;
 
-    private static MetricsTable model;
+    private MetricsTable model;
     private SceneMainManager view;
 
 
@@ -37,7 +38,7 @@ public class ControllerMainManager {
     private void setupButtonActions() {
         deleteButton.setOnAction(e -> handleDelete());
         addButton.setOnAction(e -> handleAdd());
-
+        editButton.setOnAction(e -> handleEdit());
     }
 
     private void handleDelete() {
@@ -46,7 +47,6 @@ public class ControllerMainManager {
             showError("Выберите показатель для удаления");
             return;
         }
-
         if (showConfirmation("Удалить выбранный показатель?")) {
             try {
                 model.delete(selected);
@@ -59,61 +59,55 @@ public class ControllerMainManager {
     }
 
 
-    @FXML
     private void handleAdd() {
-        Optional<Metric> result = view.showAddMetricDialog();
-        if (result.isPresent()) {
-            Metric newMetric = result.get();
+        Dialog<ButtonType>  dialog = view.doAddDialog();
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        if (dialog.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
             try {
-                model.save(newMetric);
+                model.save(view.getMetricName(), view.getMetricValue(),
+                        view.getImportanceConstantValue(), view.getCurrencyId(),
+                        view.getStartDateValue(), view.getEndDateValue());
                 view.refreshTable();
-                System.out.println("норм");
-            } catch (SQLException e) {
-                System.out.println("насрала");
+                showConfirmation("Показатель создан.");
+            } catch (Exception e){
+                showError("Введены некорректные данные");
+                System.out.println(e.getMessage());
+                showConfirmation("Подсказка: вес важности метрики находится от 1 до 5, максимальный ID валюты - 3, минимальный - 1");
+
             }
         }
     }
 
-//
-//    private void handleAdd() {
-//        try {
-//            Metric newMetric = createNewMetric();
-//            if (showConfirmation("Добавить новый показатель?")) {
-//                model.save(newMetric);
-//                view.refreshTable();
-//            }
-//        } catch (SQLException e) {
-//            showError("Ошибка добавления: " + e.getMessage());
-//        }
-//    }
 
+    @FXML
     private void handleEdit() {
-        Metric selected = view.getMetricsTable().getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showError("Выберите показатель для редактирования");
+        Metric metricToEdit = view.getMetricsTable().getSelectionModel().getSelectedItem();
+        if (metricToEdit == null) {
+            showError("Показатель не выбран");
             return;
         }
         try {
-            Metric editedMetric = editMetric(selected);
-            if (editedMetric != null) {
-                model.update(editedMetric);
-                view.refreshTable();
+            Dialog<ButtonType>  dialog = view.doEditDialog(metricToEdit);
+
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            if (dialog.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            try {
+                model.letsEditMetric(metricToEdit, view.getMetricName(), view.getMetricValue(),
+                        view.getImportanceConstantValue(), view.getCurrencyId(),
+                        view.getStartDateValue(), view.getEndDateValue());
+            } catch (Exception e) {
+                System.out.println("Проверьте правильность данных");
             }
-        } catch (SQLException e) {
-            showError("Ошибка редактирования: " + e.getMessage());
         }
+
+        } catch (Exception e){
+            System.out.println("фатальная " + e.getMessage());
+        }
+
     }
 
-    private Metric createNewMetric() {
-        return new Metric("Новый показатель", 0.0, 1, (byte)1,
-                LocalDate.now(), LocalDate.now().plusMonths(1),
-                model.getManager().getEnterpriseId());
-    }
 
-    private Metric editMetric(Metric metric) {
-        // Реализуйте диалог редактирования
-        return metric; // Заглушка
-    }
 
     private boolean showConfirmation(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
