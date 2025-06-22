@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneLogin extends Application {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 850;
+    private static final int HEIGHT = 650;
     private static final String TITLE = "Авторизация";
 
     @Override
