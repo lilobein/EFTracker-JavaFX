@@ -1,1 +1,1 @@
-Файл jar находится - \FinanceHolding\target\FinanceHolding-1.0-SNAPSHOT-shaded.jar
+Файл jar находится - \FinanceHolding\target\FinanceHolding
