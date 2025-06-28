@@ -1,1 +1,3 @@
-Файл jar находится - \FinanceHolding\target\FinanceHolding-1.0-SNAPSHOT-shaded.jar
+## Привет, это мой проект!
+### Информационная система для отслеживания финансовых показателей предприятий - Finance Holding
+ - Файл jar находится - \FinanceHolding\target\FinanceHolding.
